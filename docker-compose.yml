@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+  # Database for Auth Service (Users, Roles)
+  postgres_auth:
+    image: postgres:15
+    container_name: ticket_postgres
+    restart: always
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: auth_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_auth_data:/var/lib/postgresql/data
+
+  # Database for Ticket Service (Events, Tickets)
+  mongo_tickets:
+    image: mongo:6
+    container_name: ticket_mongo
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: password
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_tickets_data:/data/db
+
+volumes:
+  postgres_auth_data:
+  mongo_tickets_data:

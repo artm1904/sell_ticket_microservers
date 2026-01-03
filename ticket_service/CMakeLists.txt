@@ -1,0 +1,4 @@
+add_executable(ticket_service src/main.cpp)
+
+target_link_libraries(ticket_service PRIVATE shared)
+target_link_libraries(ticket_service PRIVATE project_options)
