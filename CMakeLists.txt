@@ -36,6 +36,27 @@ CPMAddPackage(
 )
 set(OATPP_BUILD_TESTS OFF CACHE BOOL "" FORCE)
 
+if(NOT TARGET oatpp::oatpp)
+    add_library(oatpp::oatpp ALIAS oatpp)
+endif()
+
+if(NOT TARGET oatpp::oatpp-test)
+    add_library(oatpp::oatpp-test ALIAS oatpp-test)
+endif()
+
+
+CPMAddPackage(
+    NAME oatpp-swagger
+    GIT_REPOSITORY https://github.com/oatpp/oatpp-swagger.git
+    GIT_TAG master
+    SOURCE_DIR ${LIB_DIR}/oatpp-swagger
+)
+set(OATPP_BUILD_TESTS OFF CACHE BOOL "" FORCE)
+
+if(NOT TARGET oatpp::oatpp-swagger)
+    add_library(oatpp::oatpp-swagger ALIAS oatpp-swagger)
+endif()
+
 
 
 add_library(project_options INTERFACE)
