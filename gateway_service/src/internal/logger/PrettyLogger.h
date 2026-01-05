@@ -22,7 +22,7 @@ class PrettyLogger : public oatpp::Logger {
                 break;
 
             case PRIORITY_I:
-                std::cout << RESET << GREEN << std::put_time(&now_tm, "%Y-%m-%d %H:%M:%S") << " ["
+                std::cout << RESET << GREEN << std::put_time(&now_tm, "%Y-%m-%d %H:%M:%S") <<RESET << GRAY <<" ["
                           << tag << "] " << message << std::endl;
                 break;
 

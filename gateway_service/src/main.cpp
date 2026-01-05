@@ -3,7 +3,9 @@
 #include "env.h"  // настройки
 #include "internal/delivery/http/controller.h"
 #include "internal/delivery/http/service.h"
+#include "internal/logger/PrettyLogger.h"
 #include "oatpp/Environment.hpp"
+#include "oatpp/base/Log.hpp"
 #include "oatpp/json/ObjectMapper.hpp"
 #include "oatpp/network/Server.hpp"
 #include "oatpp/network/tcp/server/ConnectionProvider.hpp"
@@ -38,14 +40,17 @@ void run() {
 
     /* 3. Создаем сервер */
     oatpp::network::Server server(connectionProvider, connectionHandler);
-    std::cout << "Gateway Service running on port " << HTTP_PORT << "..." << std::endl;
+    OATPP_LOGi("Gateway", "Service started on port " HTTP_PORT);
 
     // Запуск (блокирующий вызов)
     server.run();
 }
 
 int main() {
-    oatpp::Environment::init();  // Инициализация Oat++
+    auto logger = std::make_shared<PrettyLogger>();
+    oatpp::Environment::init(logger);  // Инициализация Oat++
+    // oatpp::Environment::init();
+
     run();
     oatpp::Environment::destroy();  // Очистка
     return 0;
