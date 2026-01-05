@@ -1,9 +1,11 @@
 #include <iostream>
 
 #include "env.h"  // настройки
+#include "internal/delivery/http/SwaggerComponent.hpp"
 #include "internal/delivery/http/controller.h"
 #include "internal/delivery/http/service.h"
 #include "internal/logger/PrettyLogger.h"
+#include "oatpp-swagger/Controller.hpp"
 #include "oatpp/Environment.hpp"
 #include "oatpp/base/Log.hpp"
 #include "oatpp/json/ObjectMapper.hpp"
@@ -23,6 +25,9 @@ void run() {
     // Сервис
     auto gatewayService = std::make_shared<GatewayService>();
 
+    // Swagger компоненты
+    SwaggerComponent swaggerComponent;
+
     /* 2. Настройка Сети */
     // Роутер
     auto router = oatpp::web::server::HttpRouter::createShared();
@@ -30,6 +35,13 @@ void run() {
     // Контроллер
     auto gatewayController = GatewayController::createShared(gatewayService, objectMapper);
     router->addController(gatewayController);
+
+    // Swagger Controller
+    auto docEndpoints = oatpp::web::server::api::Endpoints();
+    docEndpoints.append(gatewayController->getEndpoints());
+
+    auto swaggerController = oatpp::swagger::Controller::createShared(docEndpoints);
+    router->addController(swaggerController);
 
     // Обработчик соединений
     auto connectionHandler = oatpp::web::server::HttpConnectionHandler::createShared(router);
