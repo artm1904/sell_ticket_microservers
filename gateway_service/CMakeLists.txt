@@ -6,7 +6,7 @@ file(GLOB_RECURSE SOURCES CONFIGURE_DEPENDS "src/*.cpp") # Только src!
 
 
 add_executable(gateway
-    ${SOURCES}
+    ${SOURCES})
 
 target_link_libraries(gateway PRIVATE project_options)
 target_link_libraries(gateway PRIVATE shared)
