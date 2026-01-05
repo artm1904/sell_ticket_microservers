@@ -2,6 +2,7 @@
 
 // HTTP server
 #define NODE_ENV "development"
+#define NODE_VERSION "0.1.0"
 #define HTTP_PORT "4000"
 #define HTTP_HOST "http://localhost:4000"
 #define HTTP_CORS \

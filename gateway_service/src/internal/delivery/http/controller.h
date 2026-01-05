@@ -24,13 +24,18 @@ class GatewayController : public oatpp::web::server::api::ApiController {
         return std::make_shared<GatewayController>(service, objectMapper);
     }
 
-    ENDPOINT("GET", "/", root) {
+    ENDPOINT("GET", "/gateway", root) {
         auto msg = m_service->getWelcomeMessage();
         return createResponse(Status::CODE_200, msg);
     }
 
-    ENDPOINT("GET", "/help", help) {
+    ENDPOINT("GET", "/gateway/help", help) {
         return createResponse(Status::CODE_200, m_service->getHelpText());
+    }
+
+    ENDPOINT("GET", "/gateway/health", health) {
+        auto dto = m_service->getHealth();
+        return createDtoResponse(Status::CODE_200, dto);
     }
 
    private:
@@ -38,3 +43,5 @@ class GatewayController : public oatpp::web::server::api::ApiController {
 };
 
 #include OATPP_CODEGEN_END(ApiController)  // Конец генерации кода
+
+

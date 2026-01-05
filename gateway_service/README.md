@@ -22,7 +22,7 @@ Gateway Service running on port 4000...
 Verify the service is responding:
 
 ```
-curl -v http://localhost:4000/help
+curl -v http://localhost:4000/gateway/help
 ```
 Expected Response:
 ```
